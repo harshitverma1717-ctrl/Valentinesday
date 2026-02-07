@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Day</title>
+    <title>my_exclusive_valentines</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,10 +21,10 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
-            /* Hearts are now tiny (15px) and more frequent with a 60px grid */
+            /* Tiny hearts, plentiful with adequate spacing */
             background-image: linear-gradient(rgba(253, 242, 242, 0.92), rgba(253, 242, 242, 0.92)), 
                               url('./IMG_1279.gif?v=3');
-            background-size: 60px 60px; 
+            background-size: 55px 55px; 
             background-repeat: repeat;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
@@ -41,7 +41,7 @@
             z-index: 5;
         }
 
-        /* 4-Second Smooth Pink Transition Curtain */
+        /* 5-Second Transition Curtain (2.5s in, 2.5s out) */
         #transition-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -50,8 +50,7 @@
             z-index: 200;
             opacity: 0;
             pointer-events: none;
-            /* Transition set to 2s in and 2s out for a total of 4s feel */
-            transition: opacity 2s ease-in-out;
+            transition: opacity 2.5s ease-in-out;
         }
 
         .title-bar {
@@ -161,22 +160,21 @@
         function handleYesClick() {
             music.play();
             
-            // 1. Fade in the pink curtain (Takes 2 seconds)
+            // Start 5-second transition cycle
             overlay.style.opacity = "1";
             overlay.style.pointerEvents = "all";
 
             setTimeout(() => {
                 celebrate();
-                // 2. Fade out the curtain (Takes another 2 seconds)
                 overlay.style.opacity = "0";
                 overlay.style.pointerEvents = "none";
                 
-                // 3. Trigger confetti as the final page is revealed
+                // Show confetti as the curtain pulls back
                 setTimeout(() => {
                     document.getElementById('confetti').style.display = 'block';
-                }, 1000);
+                }, 1250);
 
-            }, 2000); // Wait 2s before starting the fade-out
+            }, 2500); // Wait 2.5s (half of the 5s) before swapping and fading out
         }
 
         function celebrate() {
