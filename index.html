@@ -9,64 +9,83 @@
         :root {
             --vibrant-coral: #E67A7A; 
             --mint-green: #90CF8E;    
-            --off-white: #FDF2F2;
+            --bg-cream: #FDF2F2;
             --pixel-black: #2D2D2D;
+            --window-pink: #F4A7A7;
         }
 
         body {
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: var(--off-white);
-            background: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
-                        url('./IMG_1279.gif?v=3');
+            background-color: var(--bg-cream);
+            background-image: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
+                              url('./IMG_1279.gif?v=3');
             background-size: cover, 80px;
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* Pixelated Border Style */
-        .pixel-border {
-            background-color: var(--off-white);
+        /* Rectangular Retro Window */
+        .window-tab {
+            width: 90%;
+            max-width: 480px; /* Rectangular aspect ratio */
+            background-color: var(--window-pink);
             border: 4px solid var(--pixel-black);
-            position: relative;
-            box-shadow: 
-                /* Inner Highlight */
-                inset -4px -4px 0px 0px #ddd,
-                /* Blocky Shadow */
-                8px 8px 0px 0px var(--pixel-black);
+            box-shadow: 8px 8px 0px var(--pixel-black);
+            overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
+        /* Top bar from your design image */
+        .title-bar {
+            background-color: var(--vibrant-coral);
+            padding: 10px;
+            border-bottom: 4px solid var(--pixel-black);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 10px;
+        }
+
+        /* Row of 3 Pixel Hearts */
+        .heart-row {
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            font-size: 18px;
+            color: var(--vibrant-coral);
+            background-color: rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid var(--pixel-black);
+        }
+
+        .content {
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         h1 {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--pixel-black);
-            line-height: 1.8;
-            margin-bottom: 25px;
+            margin: 0 0 20px 0;
             text-transform: uppercase;
         }
 
+        /* Photo replaces the cat in the center */
         .img-wrapper {
-            padding: 8px;
+            padding: 6px;
             background: white;
             border: 4px solid var(--pixel-black);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             box-shadow: 4px 4px 0px var(--pixel-black);
         }
 
         #me-img {
-            width: 180px;
+            width: 220px; /* Sized for rectangular fit */
             display: block;
             image-rendering: pixelated;
         }
@@ -75,7 +94,7 @@
             display: flex;
             flex-direction: column; 
             align-items: center;
-            gap: 20px; 
+            gap: 15px;
             width: 100%;
         }
 
@@ -83,49 +102,55 @@
             font-family: 'Press Start 2P', cursive;
             border: 4px solid var(--pixel-black);
             cursor: pointer;
-            transition: all 0.1s ease-in-out;
             text-transform: uppercase;
-            width: 220px; /* SAME INITIAL WIDTH */
-            height: 60px;  /* SAME INITIAL HEIGHT */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            width: 200px; /* Same initial size */
+            height: 50px;
+            box-shadow: 4px 4px 0px var(--pixel-black);
+            transition: all 0.1s;
         }
 
-        #yesButton {
-            background-color: var(--mint-green);
-            color: var(--pixel-black);
-            font-size: 14px;
-            box-shadow: 4px 4px 0px var(--pixel-black);
+        #yesButton { 
+            background-color: var(--mint-green); 
+            color: var(--pixel-black); 
+            font-size: 12px;
             z-index: 10;
         }
 
-        #noButton {
-            background-color: var(--vibrant-coral);
-            color: white;
-            font-size: 14px; /* Same initial font size */
-            box-shadow: 4px 4px 0px var(--pixel-black);
+        #noButton { 
+            background-color: var(--vibrant-coral); 
+            color: white; 
+            font-size: 12px; 
         }
 
         button:active {
+            transform: translate(3px, 3px);
             box-shadow: 0px 0px 0px;
-            transform: translate(4px, 4px);
         }
     </style>
 </head>
 <body>
 
-    <div class="container pixel-border" id="main-content">
-        <h1>Will you be my Valentine?</h1>
-        
-        <div class="img-wrapper">
-            <img src="./IMG_3913.jpeg" alt="Valentine" id="me-img">
+    <div class="window-tab" id="main-content">
+        <div class="title-bar">
+            <span>LOVE</span>
+            <div>- □ ×</div>
         </div>
 
-        <div class="buttons-column">
-            <button id="yesButton" onclick="celebrate()">YES</button>
-            <button id="noButton" onclick="handleNoClick()">NO</button>
+        <div class="heart-row">
+            <span>❤</span> <span>❤</span> <span>❤</span>
+        </div>
+
+        <div class="content">
+            <h1>Will you be my Valentine?</h1>
+            
+            <div class="img-wrapper">
+                <img src="./IMG_3913.jpeg" alt="Valentine" id="me-img">
+            </div>
+
+            <div class="buttons-column">
+                <button id="yesButton" onclick="celebrate()">YES</button>
+                <button id="noButton" onclick="handleNoClick()">NO</button>
+            </div>
         </div>
     </div>
 
@@ -146,35 +171,30 @@
         ];
 
         function handleNoClick() {
-            if (navigator.vibrate) {
-                navigator.vibrate(80); 
-            }
-
-            if (clickCount < noTexts.length) {
-                noButton.innerText = noTexts[clickCount];
-            }
+            if (navigator.vibrate) navigator.vibrate(80); 
+            if (clickCount < noTexts.length) noButton.innerText = noTexts[clickCount];
 
             clickCount++;
 
-            /* GROWTH LOGIC */
-            // Using min-width/height to expand the YES button
-            let newWidth = 220 + (clickCount * 25);
-            let newHeight = 60 + (clickCount * 15);
-            let fontSize = 14 + (clickCount * 3);
+            // Growth logic
+            let newWidth = 200 + (clickCount * 30);
+            let newHeight = 50 + (clickCount * 18);
+            let fontSize = 12 + (clickCount * 3);
 
             yesButton.style.width = `${newWidth}px`;
             yesButton.style.height = `${newHeight}px`;
             yesButton.style.fontSize = `${fontSize}px`;
 
-            if (clickCount > noTexts.length) {
-                noButton.style.display = 'none';
-            }
+            if (clickCount > noTexts.length) noButton.style.display = 'none';
         }
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 18px;">YAY! ❤️</h1>
-                <p style="font-size: 10px; color: var(--pixel-black); line-height: 2;">SEE YOU ON <br> THE 14TH!</p>
+                <div class="title-bar"><span>SUCCESS</span><div>×</div></div>
+                <div class="content">
+                    <h1 style="font-size: 20px; margin: 40px 0;">YAY! ❤️</h1>
+                    <p style="font-size: 10px; line-height: 2;">SEE YOU ON THE 14TH!</p>
+                </div>
             `;
         }
     </script>
