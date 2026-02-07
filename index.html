@@ -2,103 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
 
 <style>
-body {
-  background-color: #ffc0cb; /* pink */
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding-top: 120px;
-  overflow: hidden;
-}
+  * {
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
 
-h2 {
-  margin-bottom: 40px;
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    background: pink;
+    overflow: hidden;
+  }
 
-button {
-  padding: 16px 36px;
-  font-size: 18px;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
+  /* Pixel hearts background */
+  .hearts {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-#yes {
-  background-color: #28a745; /* green */
-  color: white;
-  font-size: 22px;
-}
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 8s linear infinite, spin 4s linear infinite;
+  }
 
-#no {
-  background-color: #dc3545; /* red */
-  color: white;
-  margin-top: 25px;
-}
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
 
-/* Shake animation for NO */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
-}
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: -10px;
+    top: 0;
+  }
+
+  @keyframes float {
+    from { transform: translateY(100vh) rotate(45deg); }
+    to { transform: translateY(-10vh) rotate(45deg); }
+  }
+
+  @keyframes spin {
+    from { rotate: 0deg; }
+    to { rotate: 360deg; }
+  }
+
+  /* Main container */
+  .container {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 15px;
+  }
+
+  .photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #yesBtn {
+    background: green;
+    color: white;
+    transition: transform 0.3s;
+  }
+
+  #noBtn {
+    background: red;
+    color: white;
+  }
 </style>
 </head>
 
 <body>
 
-<h2>Naaz, will you be my Valentine? 💖</h2>
+<div class="hearts" id="hearts"></div>
 
-<button id="yes">YES 💚</button>
-<br><br>
-<button id="no">NO ❌</button>
+<div class="container">
+  <img src="IMG_0980.jpeg" class="photo" alt="Me">
+  <h1>Will you be my Valentine? 💖</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">YES</button>
+    <button id="noBtn">NO</button>
+  </div>
+</div>
 
 <script>
-const noTexts = [
-  "Are you sure?",
-  "Really sure?",
-  "I will be really sad 🥺",
-  "Please",
-  "Please naaaaa 😭",
-  "Chal chal YES daba",
-  "YES bola maine",
-  "Senior ko no nhi bolte"
-];
-
-let clickCount = 0;
-let yesScale = 1;
-
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-
-noBtn.addEventListener("click", () => {
-  // Change NO text
-  if (clickCount < noTexts.length) {
-    noBtn.textContent = noTexts[clickCount];
-    clickCount++;
+  // hearts generator
+  const hearts = document.getElementById("hearts");
+  for (let i = 0; i < 30; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = 5 + Math.random() * 5 + "s";
+    hearts.appendChild(h);
   }
 
-  // Grow YES button
-  yesScale += 0.35;
-  yesBtn.style.transform = `scale(${yesScale})`;
+  const noTexts = [
+    "Are you sure?",
+    "Really sure?",
+    "I will be really sad",
+    "Please",
+    "Please naaaaa",
+    "Chal chal YES daba",
+    "YES BOLA MAINE",
+    "Senior ko no nhi bolte"
+  ];
 
-  // Shake NO button
-  noBtn.style.animation = "shake 0.4s";
-  setTimeout(() => {
-    noBtn.style.animation = "";
-  }, 400);
-});
+  let clickCount = 0;
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
 
-yesBtn.addEventListener("click", () => {
-  document.body.innerHTML = `
-    <h1 style="margin-top:150px;">YAY 💕</h1>
-    <h2>I was really hoping you’d say yes 😌</h2>
-  `;
-});
+  noBtn.addEventListener("click", () => {
+    if (clickCount < noTexts.length) {
+      noBtn.innerText = noTexts[clickCount];
+      clickCount++;
+
+      const scale = 1 + clickCount * 0.3;
+      yesBtn.style.transform = `scale(${scale})`;
+    }
+  });
+
+  yesBtn.addEventListener("click", () => {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:32px;
+        background:pink;
+      ">
+        💖 YAY! SEE YOU SOON 💖
+      </div>
+    `;
+  });
 </script>
 
 </body>
