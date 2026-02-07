@@ -153,11 +153,11 @@
 
         <div class="heart-row" id="decor-row">
             <div class="pixel-dot"></div>
-            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <img src="./IMG_1056.jpeg" class="row-img" alt="deco">
             <div class="pixel-dot"></div>
-            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <img src="./IMG_1056.jpeg" class="row-img" alt="deco">
             <div class="pixel-dot"></div>
-            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <img src="./IMG_1056.jpeg" class="row-img" alt="deco">
             <div class="pixel-dot"></div>
         </div>
 
@@ -179,7 +179,6 @@
         let clickCount = 0;
         const yesButton = document.getElementById('yesButton');
         const noButton = document.getElementById('noButton');
-        const decorRowHTML = document.getElementById('decor-row').innerHTML;
 
         const noTexts = [
             "Are you sure?",
@@ -216,6 +215,9 @@
         }
 
         function celebrate() {
+            // Captured the updated decor row HTML with the new image
+            const decorRowHTML = document.getElementById('decor-row').innerHTML;
+            
             document.getElementById('main-content').innerHTML = `
                 <div class="title-bar">
                     <span>SUCCESS</span><div>×</div>
@@ -226,8 +228,8 @@
                         <img src="./IMG_0980.jpeg" style="width: 180px; display: block; image-rendering: pixelated;">
                     </div>
                     <h1 style="font-size: 20px; margin: 10px 0;">YAY!</h1>
-                    <p style="font-size: 10px; line-height: 2; color: white; text-shadow: 2px 2px var(--vibrant-coral); text-align: center; text-transform: uppercase;">
-                        SEE YOU ON THE 14TH!
+                    <p style="font-size: 14px; line-height: 1.6; color: white; text-shadow: 2px 2px var(--vibrant-coral); text-align: center; text-transform: uppercase;">
+                        SEE YOU ON <br> THE 14TH!
                     </p>
                 </div>
             `;
