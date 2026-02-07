@@ -21,16 +21,15 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
-            /* Reduced heart count while keeping size small (25px) */
-            background-image: linear-gradient(rgba(253, 242, 242, 0.95), rgba(253, 242, 242, 0.95)), 
+            /* Hearts are now tiny (15px) and more frequent with a 60px grid */
+            background-image: linear-gradient(rgba(253, 242, 242, 0.92), rgba(253, 242, 242, 0.92)), 
                               url('./IMG_1279.gif?v=3');
-            background-size: 200px 200px; /* Large grid keeps hearts sparse */
+            background-size: 60px 60px; 
             background-repeat: repeat;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
         }
 
-        /* Smoothing the background transitions */
         .window-tab {
             width: 85%;
             max-width: 380px; 
@@ -40,10 +39,9 @@
             overflow: hidden;
             position: relative;
             z-index: 5;
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
         }
 
-        /* The pink transition curtain */
+        /* 4-Second Smooth Pink Transition Curtain */
         #transition-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -52,7 +50,8 @@
             z-index: 200;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 1s ease-in-out;
+            /* Transition set to 2s in and 2s out for a total of 4s feel */
+            transition: opacity 2s ease-in-out;
         }
 
         .title-bar {
@@ -100,8 +99,6 @@
 
         #yesButton { background-color: var(--mint-green); color: white; font-size: 10px; }
         #noButton { background-color: var(--vibrant-coral); color: white; font-size: 10px; }
-
-        button:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px; }
 
         .confetti-overlay {
             position: fixed; top: 0; left: 0;
@@ -153,10 +150,6 @@
             const noTexts = ["Are you sure?", "Really sure?", "I will be sad", "Please", "Please naaaaa", "Chal daba na yes", "YES BOLA MAINE", "Boss ko no nhi bolte"];
             if (clickCount < noTexts.length) {
                 noButton.innerText = noTexts[clickCount];
-                if (noTexts[clickCount].length > 15) {
-                    noButton.style.width = "auto";
-                    noButton.style.padding = "15px 20px";
-                }
             }
             clickCount++;
             yesButton.style.width = `${200 + (clickCount * 30)}px`;
@@ -168,23 +161,22 @@
         function handleYesClick() {
             music.play();
             
-            // 1. Smoothly fade in the pink curtain
+            // 1. Fade in the pink curtain (Takes 2 seconds)
             overlay.style.opacity = "1";
             overlay.style.pointerEvents = "all";
 
-            // 2. Wait for the pink to fully cover (1s), then swap content hidden
             setTimeout(() => {
                 celebrate();
-                // 3. Fade the pink curtain back out (1s) to reveal the YAY page
+                // 2. Fade out the curtain (Takes another 2 seconds)
                 overlay.style.opacity = "0";
                 overlay.style.pointerEvents = "none";
                 
-                // 4. Trigger confetti only after curtain starts fading out
+                // 3. Trigger confetti as the final page is revealed
                 setTimeout(() => {
                     document.getElementById('confetti').style.display = 'block';
-                }, 500);
+                }, 1000);
 
-            }, 1000); 
+            }, 2000); // Wait 2s before starting the fade-out
         }
 
         function celebrate() {
