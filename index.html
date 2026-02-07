@@ -25,11 +25,11 @@
         .container {
             text-align: center;
             padding: 20px;
-            z-index: 10;
+            width: 100%;
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #d63384;
             margin-bottom: 20px;
         }
@@ -46,7 +46,7 @@
         }
 
         #me-img {
-            width: 200px;
+            width: 180px; /* Sized for better fit */
             display: block;
             border-radius: 6px;
         }
@@ -56,28 +56,31 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
+            /* This ensures they stay centered even when YES grows */
+            min-height: 200px; 
         }
 
         button {
             padding: 12px 25px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
+            white-space: nowrap;
         }
 
         #yesButton {
             background-color: var(--accent-green);
             color: white;
-            min-width: 100px;
+            z-index: 10;
         }
 
         #noButton {
             background-color: var(--primary-red);
             color: white;
+            z-index: 5;
         }
 
         .heart-icon {
@@ -118,39 +121,34 @@
         ];
 
         function handleNoClick() {
-            // VIBRATION: Needs to be triggered by a click to work on most browsers
+            // VIBRATION (Works on Android/Chrome)
             if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100]); 
+                navigator.vibrate(100); 
             }
 
-            // Change No Button Text
+            // 1. Change the text based on your sequence
             if (clickCount < noTexts.length) {
                 noButton.innerText = noTexts[clickCount];
-            } else {
-                // After the last phrase, the No button disappears
-                noButton.style.display = 'none';
             }
 
-            // Make YES Button Bigger
+            // 2. Increase Click Count
             clickCount++;
-            let newScale = 1 + (clickCount * 0.4); // Increases by 40% each click
-            let newPadding = 12 + (clickCount * 10);
-            
-            yesButton.style.transform = `scale(${newScale})`;
-            // Ensure the YES button doesn't go off screen but stays large
-            if (newScale > 4) {
-                yesButton.style.position = 'fixed';
-                yesButton.style.top = '50%';
-                yesButton.style.left = '50%';
-                yesButton.style.transform = 'translate(-50%, -50%) scale(5)';
-                yesButton.style.zIndex = '100';
+
+            // 3. Make YES Button Bigger
+            // Increase font size and padding proportionally
+            let newSize = 1 + (clickCount * 0.5); 
+            yesButton.style.transform = `scale(${newSize})`;
+
+            // 4. Handle "No" behavior at the end of the list
+            if (clickCount > noTexts.length) {
+                noButton.style.display = 'none'; // Finally hide it after the last message
             }
         }
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
                 <h1 style="font-size: 3rem;">YAY! ❤️</h1>
-                <p style="font-size: 1.5rem;">See you soon!</p>
+                <p style="font-size: 1.5rem;">See you on the 14th!</p>
                 <div style="font-size: 5rem;">💖</div>
             `;
         }
