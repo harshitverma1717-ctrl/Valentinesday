@@ -3,41 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <title>Valentine</title>
+
 <style>
 body {
-  background:#ffe6ec;
+  background: #ffc0cb;
   font-family: Arial, sans-serif;
-  text-align:center;
-  padding-top:120px;
+  text-align: center;
+  padding-top: 120px;
+  overflow: hidden;
 }
+
+h2 {
+  margin-bottom: 40px;
+}
+
 button {
-  padding:15px 30px;
-  font-size:18px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
+  padding: 16px 34px;
+  font-size: 18px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.35s ease;
 }
+
 #yes {
-  background:#ff4d6d;
-  color:white;
+  background: #28a745;
+  color: white;
+  font-size: 22px;
 }
+
 #no {
-  margin-top:20px;
+  background: #dc3545;
+  color: white;
+  margin-top: 25px;
+}
+
+/* shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
 }
 </style>
 </head>
+
 <body>
 
 <h2>Naaz, will you be my Valentine? 💖</h2>
 
-<button id="yes" onclick="alert('Yay 💕')">Yes 💘</button><br><br>
+<button id="yes">YES 💚</button>
+<br><br>
+<button id="no">NO ❌</button>
 
-<button id="no"
-onmouseover="this.style.position='absolute';
-this.style.left=Math.random()*80+'%';
-this.style.top=Math.random()*80+'%'">
-No 🙈
-</button>
+<script>
+let noTexts = [
+  "Are you sure?",
+  "Really sure?",
+  "I will be really sad 🥺",
+  "Please",
+  "Please naaaaa 😭",
+  "Okay last time please",
+  "Bas ek YES bol do",
+  "I’ll wait 🫶"
+];
+
+let noClickCount = 0;
+let yesBtn = document.getElementById("yes");
+let noBtn = document.getElementById("no");
+
+let yesScale = 1;
+
+noBtn.onclick = function () {
+  if (noClickCount < noTexts.length) {
+    noBtn.innerText = noTexts[noClickCount];
+    noBtn.style.animation = "shake 0.4s";
+    setTimeout(() => noBtn.style.animation = "", 400);
+
+    noClickCount++;
+    yesScale += 0.3;
+    yesBtn.style.transform = `scale(${yesScale})`;
+  } else {
+    noBtn.style.display = "none";
+  }
+};
+
+yesBtn.onclick = function () {
+  document.body.innerHTML = `
+    <h1 style="margin-top:150px;">YAY 💕</h1>
+    <h2>I was hoping you’d say yes 😌</h2>
+  `;
+};
+</script>
 
 </body>
 </html>
