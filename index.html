@@ -21,12 +21,13 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
+            /* Reduced number of hearts: background size set to 150px for more spacing */
             background-image: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
                               url('./IMG_1279.gif?v=3');
-            background-size: 25px; 
+            background-size: 150px; 
             background-repeat: repeat;
             font-family: 'Press Start 2P', cursive;
-            overflow: hidden; /* Prevents scroll during confetti */
+            overflow: hidden;
         }
 
         .window-tab {
@@ -38,6 +39,7 @@
             overflow: hidden;
             position: relative;
             z-index: 5;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .title-bar {
@@ -61,17 +63,8 @@
             border-bottom: 4px solid var(--vibrant-coral);
         }
 
-        .pixel-dot {
-            width: 4px;
-            height: 4px;
-            background-color: var(--vibrant-coral);
-        }
-
-        .row-img {
-            width: 35px;
-            height: auto;
-            image-rendering: pixelated;
-        }
+        .pixel-dot { width: 4px; height: 4px; background-color: var(--vibrant-coral); }
+        .row-img { width: 35px; height: auto; image-rendering: pixelated; }
 
         .content {
             padding: 15px;
@@ -98,19 +91,7 @@
             line-height: 0;
         }
 
-        #me-img {
-            width: 180px;
-            display: block;
-            image-rendering: pixelated;
-        }
-
-        .buttons-column {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
+        #me-img { width: 180px; display: block; image-rendering: pixelated; }
 
         button {
             font-family: 'Press Start 2P', cursive;
@@ -131,12 +112,8 @@
         #yesButton { background-color: var(--mint-green); color: white; font-size: 10px; }
         #noButton { background-color: var(--vibrant-coral); color: white; font-size: 10px; }
 
-        button:active {
-            transform: translate(3px, 3px);
-            box-shadow: 0px 0px 0px;
-        }
+        button:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px; }
 
-        /* Confetti Overlay Styling */
         .confetti-overlay {
             position: fixed;
             top: 0;
@@ -144,14 +121,18 @@
             width: 100vw;
             height: 100vh;
             background-image: url('./IMG_1288.gif');
-            background-size: contain;
-            pointer-events: none; /* Allows clicking through it */
+            background-size: cover;
+            pointer-events: none;
             z-index: 100;
             display: none;
         }
     </style>
 </head>
 <body>
+
+    <audio id="valentineMusic">
+        <source src="ℍ𝕆𝕋! JVKE ~ her Ringtone (Free).mp3" type="audio/mpeg">
+    </audio>
 
     <div class="confetti-overlay" id="confetti"></div>
 
@@ -178,8 +159,8 @@
                 <img src="./IMG_3913.jpeg" alt="Valentine" id="me-img">
             </div>
 
-            <div class="buttons-column">
-                <button id="yesButton" onclick="celebrate()">YES</button>
+            <div class="buttons-column" style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                <button id="yesButton" onclick="startTransition()">YES</button>
                 <button id="noButton" onclick="handleNoClick()">NO</button>
             </div>
         </div>
@@ -189,20 +170,10 @@
         let clickCount = 0;
         const yesButton = document.getElementById('yesButton');
         const noButton = document.getElementById('noButton');
-
-        const noTexts = [
-            "Are you sure?",
-            "Really sure?",
-            "I will be sad",
-            "Please",
-            "Please naaaaa",
-            "Chal daba na yes",
-            "YES BOLA MAINE",
-            "Boss ko no nhi bolte"
-        ];
+        const music = document.getElementById('valentineMusic');
 
         function handleNoClick() {
-            if (navigator.vibrate) navigator.vibrate(80); 
+            const noTexts = ["Are you sure?", "Really sure?", "I will be sad", "Please", "Please naaaaa", "Chal daba na yes", "YES BOLA MAINE", "Boss ko no nhi bolte"];
             if (clickCount < noTexts.length) {
                 noButton.innerText = noTexts[clickCount];
                 if (noTexts[clickCount].length > 15) {
@@ -211,26 +182,34 @@
                 }
             }
             clickCount++;
-            let newWidth = 200 + (clickCount * 30);
-            let newHeight = 55 + (clickCount * 15);
-            let fontSize = 10 + (clickCount * 2);
-            yesButton.style.width = `${newWidth}px`;
-            yesButton.style.height = `${newHeight}px`;
-            yesButton.style.fontSize = `${fontSize}px`;
+            yesButton.style.width = `${200 + (clickCount * 30)}px`;
+            yesButton.style.height = `${55 + (clickCount * 15)}px`;
+            yesButton.style.fontSize = `${10 + (clickCount * 2)}px`;
             if (clickCount > noTexts.length) noButton.style.display = 'none';
         }
 
-        function celebrate() {
-            // Show confetti gif
-            const confetti = document.getElementById('confetti');
-            confetti.style.display = 'block';
+        function startTransition() {
+            // Start the song immediately on click
+            music.play();
 
+            // Show Confetti
+            document.getElementById('confetti').style.display = 'block';
+
+            // Fade out the window tab partially to show something is happening
+            const mainContent = document.getElementById('main-content');
+            mainContent.style.opacity = "0.5";
+            
+            // Wait 2 seconds before switching the content
+            setTimeout(celebrate, 2000);
+        }
+
+        function celebrate() {
+            const mainContent = document.getElementById('main-content');
             const decorRowHTML = document.getElementById('decor-row').innerHTML;
             
-            document.getElementById('main-content').innerHTML = `
-                <div class="title-bar">
-                    <span>SUCCESS</span><div>×</div>
-                </div>
+            mainContent.style.opacity = "1";
+            mainContent.innerHTML = `
+                <div class="title-bar"><span>SUCCESS</span><div>×</div></div>
                 <div class="heart-row">${decorRowHTML}</div>
                 <div class="content">
                     <div class="img-wrapper" style="margin-top: 10px;">
