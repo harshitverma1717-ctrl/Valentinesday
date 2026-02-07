@@ -6,9 +6,11 @@
     <title>Valentine's Day</title>
     <style>
         :root {
-            --primary-red: #f44336;
-            --accent-green: #4caf50;
-            --bg-pink: #fff0f3;
+            --bg-lavender: #ece7f2;
+            --card-white: #f3f0f7;
+            --text-plum: #82637a;
+            --yes-sage: #b2b9ad;
+            --no-rose: #cc9797;
         }
 
         body {
@@ -18,11 +20,11 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: var(--bg-pink);
-            /* BACKGROUND HEARTS with lower opacity effect */
-            background: linear-gradient(rgba(255, 240, 243, 0.7), rgba(255, 240, 243, 0.7)), 
+            background-color: var(--bg-lavender);
+            /* Heart GIF background with very low opacity */
+            background: linear-gradient(rgba(236, 231, 242, 0.85), rgba(236, 231, 242, 0.85)), 
                         url('./IMG_1279.gif?v=3');
-            background-size: cover, 120px;
+            background-size: cover, 100px;
             background-repeat: no-repeat, repeat;
             background-attachment: fixed;
             font-family: 'Arial', sans-serif;
@@ -30,12 +32,11 @@
 
         .container {
             text-align: center;
-            padding: 25px;
+            padding: 40px 20px;
             width: 85%;
-            max-width: 400px;
-            background-color: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(3px);
-            border-radius: 25px;
+            max-width: 350px;
+            background-color: var(--card-white);
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -43,23 +44,24 @@
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: #d63384;
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: var(--text-plum);
+            margin-bottom: 25px;
+            font-weight: normal;
         }
 
         .img-wrapper {
-            padding: 8px;
+            padding: 5px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
         }
 
         #me-img {
-            width: 190px;
+            width: 180px;
             display: block;
-            border-radius: 6px;
+            border-radius: 5px;
         }
 
         .buttons-column {
@@ -73,39 +75,40 @@
         button {
             font-weight: bold;
             border: none;
-            border-radius: 50px;
+            border-radius: 5px; /* Boxy aesthetic like your image */
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
         }
 
         #yesButton {
-            background-color: var(--accent-green);
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.1rem;
+            background-color: var(--yes-sage);
+            padding: 12px 40px;
+            font-size: 1rem;
         }
 
         #noButton {
-            background-color: var(--primary-red);
-            color: white;
-            padding: 10px 25px;
-            font-size: 0.95rem;
+            background-color: var(--no-rose);
+            padding: 12px 40px;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="main-content">
-        <h1>Will you be my Valentine? 💖</h1>
+        <h1>Will you be my Valentine?</h1>
         
         <div class="img-wrapper">
             <img src="./IMG_3913.jpeg" alt="Valentine" id="me-img">
         </div>
 
         <div class="buttons-column">
-            <button id="yesButton" onclick="celebrate()">YES 💚</button>
-            <button id="noButton" onclick="handleNoClick()">No ❤️</button>
+            <button id="yesButton" onclick="celebrate()">YES</button>
+            <button id="noButton" onclick="handleNoClick()">NO</button>
         </div>
     </div>
 
@@ -127,7 +130,7 @@
 
         function handleNoClick() {
             if (navigator.vibrate) {
-                navigator.vibrate(70); 
+                navigator.vibrate(50); 
             }
 
             if (clickCount < noTexts.length) {
@@ -136,14 +139,14 @@
 
             clickCount++;
 
-            /* SMALLER GROWTH LOGIC */
-            // Reduced increments (6px padding and 0.1rem font per click)
-            let newPaddingV = 15 + (clickCount * 6); 
-            let newPaddingH = 40 + (clickCount * 10);
-            let newFontSize = 1.1 + (clickCount * 0.1);
+            /* VERY SUBTLE GROWTH */
+            // Smaller increments to keep it elegant
+            let paddingV = 12 + (clickCount * 4); 
+            let paddingH = 40 + (clickCount * 6);
+            let fontSize = 1 + (clickCount * 0.05);
 
-            yesButton.style.padding = `${newPaddingV}px ${newPaddingH}px`;
-            yesButton.style.fontSize = `${newFontSize}rem`;
+            yesButton.style.padding = `${paddingV}px ${paddingH}px`;
+            yesButton.style.fontSize = `${fontSize}rem`;
 
             if (clickCount > noTexts.length) {
                 noButton.style.display = 'none';
@@ -152,8 +155,8 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 2.5rem;">YAY! ❤️</h1>
-                <p style="font-size: 1.2rem;">Best decision ever!</p>
+                <h1 style="font-size: 2rem; color: var(--text-plum);">Yay! ❤️</h1>
+                <p style="color: var(--text-plum);">See you on the 14th!</p>
             `;
         }
     </script>
