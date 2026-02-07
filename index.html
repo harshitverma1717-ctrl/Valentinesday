@@ -1,9 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test</title>
+<meta charset="UTF-8">
+<title>Valentine</title>
+<style>
+body {
+  background:#ffe6ec;
+  font-family: Arial, sans-serif;
+  text-align:center;
+  padding-top:120px;
+}
+button {
+  padding:15px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
+#yes {
+  background:#ff4d6d;
+  color:white;
+}
+#no {
+  margin-top:20px;
+}
+</style>
 </head>
-<body style="text-align:center; margin-top:100px;">
-  <h1>It works 💖</h1>
+<body>
+
+<h2>Naaz, will you be my Valentine? 💖</h2>
+
+<button id="yes" onclick="alert('Yay 💕')">Yes 💘</button><br><br>
+
+<button id="no"
+onmouseover="this.style.position='absolute';
+this.style.left=Math.random()*80+'%';
+this.style.top=Math.random()*80+'%'">
+No 🙈
+</button>
+
 </body>
 </html>
