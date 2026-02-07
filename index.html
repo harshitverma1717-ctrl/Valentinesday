@@ -21,15 +21,16 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
-            /* Reduced number of hearts: background size set to 150px for more spacing */
-            background-image: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
+            /* Reduced heart count while keeping size small (25px) */
+            background-image: linear-gradient(rgba(253, 242, 242, 0.95), rgba(253, 242, 242, 0.95)), 
                               url('./IMG_1279.gif?v=3');
-            background-size: 150px; 
+            background-size: 200px 200px; /* Large grid keeps hearts sparse */
             background-repeat: repeat;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
         }
 
+        /* Smoothing the background transitions */
         .window-tab {
             width: 85%;
             max-width: 380px; 
@@ -39,26 +40,32 @@
             overflow: hidden;
             position: relative;
             z-index: 5;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        /* The pink transition curtain */
+        #transition-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--light-coral);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
         }
 
         .title-bar {
             background-color: var(--vibrant-coral);
             padding: 12px;
             border-bottom: 4px solid var(--vibrant-coral);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 14px; 
+            display: flex; justify-content: space-between; align-items: center;
+            color: white; font-size: 14px; 
         }
 
         .heart-row {
             padding: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
             background-color: rgba(255, 255, 255, 0.15);
             border-bottom: 4px solid var(--vibrant-coral);
         }
@@ -66,28 +73,17 @@
         .pixel-dot { width: 4px; height: 4px; background-color: var(--vibrant-coral); }
         .row-img { width: 35px; height: auto; image-rendering: pixelated; }
 
-        .content {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .content { padding: 15px; display: flex; flex-direction: column; align-items: center; }
 
         h1 {
-            font-size: 13px; 
-            color: white;
-            margin: 10px 0 20px 0;
-            text-transform: uppercase;
-            line-height: 1.4;
-            text-align: center;
+            font-size: 13px; color: white; margin: 10px 0 20px 0;
+            text-transform: uppercase; line-height: 1.4; text-align: center;
             text-shadow: 2px 2px var(--vibrant-coral);
         }
 
         .img-wrapper {
-            background: none;
-            border: 4px solid var(--vibrant-coral);
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0px var(--pixel-black);
+            background: none; border: 4px solid var(--vibrant-coral);
+            margin-bottom: 20px; box-shadow: 4px 4px 0px var(--pixel-black);
             line-height: 0;
         }
 
@@ -95,18 +91,11 @@
 
         button {
             font-family: 'Press Start 2P', cursive;
-            border: 4px solid var(--pixel-black);
-            cursor: pointer;
-            text-transform: uppercase;
-            width: 200px; 
-            min-height: 55px;
-            box-shadow: 4px 4px 0px var(--pixel-black);
-            transition: all 0.1s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            white-space: nowrap; 
+            border: 4px solid var(--pixel-black); cursor: pointer;
+            text-transform: uppercase; width: 200px; min-height: 55px;
+            box-shadow: 4px 4px 0px var(--pixel-black); transition: all 0.1s;
+            display: flex; justify-content: center; align-items: center;
+            padding: 10px; white-space: nowrap; 
         }
 
         #yesButton { background-color: var(--mint-green); color: white; font-size: 10px; }
@@ -115,16 +104,11 @@
         button:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px; }
 
         .confetti-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background-image: url('./IMG_1288.gif');
-            background-size: cover;
-            pointer-events: none;
-            z-index: 100;
-            display: none;
+            background-size: cover; pointer-events: none;
+            z-index: 100; display: none;
         }
     </style>
 </head>
@@ -134,14 +118,11 @@
         <source src="ℍ𝕆𝕋! JVKE ~ her Ringtone (Free).mp3" type="audio/mpeg">
     </audio>
 
+    <div id="transition-overlay"></div>
     <div class="confetti-overlay" id="confetti"></div>
 
     <div class="window-tab" id="main-content">
-        <div class="title-bar">
-            <span>LOVE</span>
-            <div>- □ ×</div>
-        </div>
-
+        <div class="title-bar"><span>LOVE</span><div>- □ ×</div></div>
         <div class="heart-row" id="decor-row">
             <div class="pixel-dot"></div>
             <img src="./IMG_1287.png" class="row-img" alt="deco">
@@ -151,16 +132,11 @@
             <img src="./IMG_1287.png" class="row-img" alt="deco">
             <div class="pixel-dot"></div>
         </div>
-
         <div class="content">
             <h1>Will you be my Valentine?</h1>
-            
-            <div class="img-wrapper">
-                <img src="./IMG_3913.jpeg" alt="Valentine" id="me-img">
-            </div>
-
-            <div class="buttons-column" style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
-                <button id="yesButton" onclick="startTransition()">YES</button>
+            <div class="img-wrapper"><img src="./IMG_3913.jpeg" alt="Valentine" id="me-img"></div>
+            <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                <button id="yesButton" onclick="handleYesClick()">YES</button>
                 <button id="noButton" onclick="handleNoClick()">NO</button>
             </div>
         </div>
@@ -171,6 +147,7 @@
         const yesButton = document.getElementById('yesButton');
         const noButton = document.getElementById('noButton');
         const music = document.getElementById('valentineMusic');
+        const overlay = document.getElementById('transition-overlay');
 
         function handleNoClick() {
             const noTexts = ["Are you sure?", "Really sure?", "I will be sad", "Please", "Please naaaaa", "Chal daba na yes", "YES BOLA MAINE", "Boss ko no nhi bolte"];
@@ -188,26 +165,32 @@
             if (clickCount > noTexts.length) noButton.style.display = 'none';
         }
 
-        function startTransition() {
-            // Start the song immediately on click
+        function handleYesClick() {
             music.play();
-
-            // Show Confetti
-            document.getElementById('confetti').style.display = 'block';
-
-            // Fade out the window tab partially to show something is happening
-            const mainContent = document.getElementById('main-content');
-            mainContent.style.opacity = "0.5";
             
-            // Wait 2 seconds before switching the content
-            setTimeout(celebrate, 2000);
+            // 1. Smoothly fade in the pink curtain
+            overlay.style.opacity = "1";
+            overlay.style.pointerEvents = "all";
+
+            // 2. Wait for the pink to fully cover (1s), then swap content hidden
+            setTimeout(() => {
+                celebrate();
+                // 3. Fade the pink curtain back out (1s) to reveal the YAY page
+                overlay.style.opacity = "0";
+                overlay.style.pointerEvents = "none";
+                
+                // 4. Trigger confetti only after curtain starts fading out
+                setTimeout(() => {
+                    document.getElementById('confetti').style.display = 'block';
+                }, 500);
+
+            }, 1000); 
         }
 
         function celebrate() {
             const mainContent = document.getElementById('main-content');
             const decorRowHTML = document.getElementById('decor-row').innerHTML;
             
-            mainContent.style.opacity = "1";
             mainContent.innerHTML = `
                 <div class="title-bar"><span>SUCCESS</span><div>×</div></div>
                 <div class="heart-row">${decorRowHTML}</div>
