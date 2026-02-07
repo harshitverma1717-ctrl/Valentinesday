@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Valentine</title>
 
 <style>
 body {
-  background: #ffc0cb;
+  background-color: #ffc0cb; /* pink */
   font-family: Arial, sans-serif;
   text-align: center;
   padding-top: 120px;
@@ -18,27 +18,27 @@ h2 {
 }
 
 button {
-  padding: 16px 34px;
+  padding: 16px 36px;
   font-size: 18px;
   border: none;
   border-radius: 14px;
   cursor: pointer;
-  transition: all 0.35s ease;
+  transition: transform 0.3s ease;
 }
 
 #yes {
-  background: #28a745;
+  background-color: #28a745; /* green */
   color: white;
   font-size: 22px;
 }
 
 #no {
-  background: #dc3545;
+  background-color: #dc3545; /* red */
   color: white;
   margin-top: 25px;
 }
 
-/* shake animation */
+/* Shake animation for NO */
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
@@ -58,43 +58,47 @@ button {
 <button id="no">NO ❌</button>
 
 <script>
-let noTexts = [
+const noTexts = [
   "Are you sure?",
   "Really sure?",
   "I will be really sad 🥺",
   "Please",
   "Please naaaaa 😭",
-  "Okay last time please",
-  "Bas ek YES bol do",
-  "I’ll wait 🫶"
+  "Chal chal YES daba",
+  "YES bola maine",
+  "Senior ko no nhi bolte"
 ];
 
-let noClickCount = 0;
-let yesBtn = document.getElementById("yes");
-let noBtn = document.getElementById("no");
-
+let clickCount = 0;
 let yesScale = 1;
 
-noBtn.onclick = function () {
-  if (noClickCount < noTexts.length) {
-    noBtn.innerText = noTexts[noClickCount];
-    noBtn.style.animation = "shake 0.4s";
-    setTimeout(() => noBtn.style.animation = "", 400);
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
 
-    noClickCount++;
-    yesScale += 0.3;
-    yesBtn.style.transform = `scale(${yesScale})`;
-  } else {
-    noBtn.style.display = "none";
+noBtn.addEventListener("click", () => {
+  // Change NO text
+  if (clickCount < noTexts.length) {
+    noBtn.textContent = noTexts[clickCount];
+    clickCount++;
   }
-};
 
-yesBtn.onclick = function () {
+  // Grow YES button
+  yesScale += 0.35;
+  yesBtn.style.transform = `scale(${yesScale})`;
+
+  // Shake NO button
+  noBtn.style.animation = "shake 0.4s";
+  setTimeout(() => {
+    noBtn.style.animation = "";
+  }, 400);
+});
+
+yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
     <h1 style="margin-top:150px;">YAY 💕</h1>
-    <h2>I was hoping you’d say yes 😌</h2>
+    <h2>I was really hoping you’d say yes 😌</h2>
   `;
-};
+});
 </script>
 
 </body>
