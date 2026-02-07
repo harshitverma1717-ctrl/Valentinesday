@@ -6,11 +6,11 @@
     <title>Valentine's Day</title>
     <style>
         :root {
-            --bg-lavender: #ece7f2;
-            --card-white: #f3f0f7;
-            --text-plum: #82637a;
-            --yes-sage: #b2b9ad;
-            --no-rose: #cc9797;
+            --bg-lavender: #B4A5CF;
+            --light-purple: #D7B4D4;
+            --yes-yellow: #EEDFB2;
+            --no-rose: #D47B91;
+            --text-mauve: #82637a;
         }
 
         body {
@@ -21,8 +21,8 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-lavender);
-            /* Heart GIF background with very low opacity */
-            background: linear-gradient(rgba(236, 231, 242, 0.85), rgba(236, 231, 242, 0.85)), 
+            /* Heart GIF background with 15% opacity */
+            background: linear-gradient(rgba(180, 165, 207, 0.85), rgba(180, 165, 207, 0.85)), 
                         url('./IMG_1279.gif?v=3');
             background-size: cover, 100px;
             background-repeat: no-repeat, repeat;
@@ -35,33 +35,34 @@
             padding: 40px 20px;
             width: 85%;
             max-width: 350px;
-            background-color: var(--card-white);
-            border-radius: 15px;
+            background-color: #fcfafc; /* Soft off-white card */
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--light-purple);
         }
 
         h1 {
             font-size: 1.6rem;
-            color: var(--text-plum);
+            color: var(--text-mauve);
             margin-bottom: 25px;
             font-weight: normal;
         }
 
         .img-wrapper {
-            padding: 5px;
+            padding: 8px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             margin-bottom: 30px;
         }
 
         #me-img {
             width: 180px;
             display: block;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         .buttons-column {
@@ -75,7 +76,7 @@
         button {
             font-weight: bold;
             border: none;
-            border-radius: 5px; /* Boxy aesthetic like your image */
+            border-radius: 8px; /* Slightly rounded boxy style */
             cursor: pointer;
             transition: all 0.4s ease;
             display: block;
@@ -85,7 +86,8 @@
         }
 
         #yesButton {
-            background-color: var(--yes-sage);
+            background-color: var(--yes-yellow);
+            color: var(--text-mauve); /* Darker text for yellow contrast */
             padding: 12px 40px;
             font-size: 1rem;
         }
@@ -139,11 +141,10 @@
 
             clickCount++;
 
-            /* VERY SUBTLE GROWTH */
-            // Smaller increments to keep it elegant
+            /* SUBTLE GROWTH */
             let paddingV = 12 + (clickCount * 4); 
             let paddingH = 40 + (clickCount * 6);
-            let fontSize = 1 + (clickCount * 0.05);
+            let fontSize = 1 + (clickCount * 0.04);
 
             yesButton.style.padding = `${paddingV}px ${paddingH}px`;
             yesButton.style.fontSize = `${fontSize}rem`;
@@ -155,8 +156,8 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 2rem; color: var(--text-plum);">Yay! ❤️</h1>
-                <p style="color: var(--text-plum);">See you on the 14th!</p>
+                <h1 style="font-size: 2.5rem; color: var(--text-mauve);">Yay! ❤️</h1>
+                <p style="color: var(--text-mauve); font-size: 1.2rem;">See you on the 14th!</p>
             `;
         }
     </script>
