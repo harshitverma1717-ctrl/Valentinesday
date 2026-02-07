@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-lavender: #B4A5CF;
@@ -11,6 +12,7 @@
             --yes-yellow: #EEDFB2;
             --no-rose: #D47B91;
             --text-mauve: #82637a;
+            --off-white: #fcfafc;
         }
 
         body {
@@ -21,81 +23,86 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-lavender);
-            /* Heart GIF background with 15% opacity */
-            background: linear-gradient(rgba(180, 165, 207, 0.85), rgba(180, 165, 207, 0.85)), 
+            /* Soft heart background */
+            background: linear-gradient(rgba(180, 165, 207, 0.8), rgba(180, 165, 207, 0.8)), 
                         url('./IMG_1279.gif?v=3');
             background-size: cover, 100px;
             background-repeat: no-repeat, repeat;
             background-attachment: fixed;
-            font-family: 'Arial', sans-serif;
+            /* Applying Pixel Font */
+            font-family: 'Press Start 2P', cursive;
+            color: var(--text-mauve);
         }
 
         .container {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 25px;
             width: 85%;
-            max-width: 350px;
-            background-color: #fcfafc; /* Soft off-white card */
+            max-width: 400px;
+            background-color: var(--off-white);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid var(--light-purple);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 4px solid var(--light-purple);
         }
 
         h1 {
-            font-size: 1.6rem;
-            color: var(--text-mauve);
+            font-size: 14px; /* Pixel fonts look best at smaller sizes */
+            line-height: 1.6;
             margin-bottom: 25px;
-            font-weight: normal;
+            text-transform: uppercase;
         }
 
         .img-wrapper {
-            padding: 8px;
+            padding: 10px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            border: 3px solid var(--light-purple);
             margin-bottom: 30px;
         }
 
         #me-img {
-            width: 180px;
+            width: 200px;
             display: block;
-            border-radius: 8px;
+            image-rendering: pixelated; /* Keeps it sharp like pixel art */
         }
 
         .buttons-column {
             display: flex;
             flex-direction: column; 
             align-items: center;
-            gap: 15px; 
+            gap: 20px; 
             width: 100%;
         }
 
         button {
-            font-weight: bold;
-            border: none;
-            border-radius: 8px; /* Slightly rounded boxy style */
+            font-family: 'Press Start 2P', cursive;
+            border: 4px solid var(--text-mauve);
+            border-radius: 0; /* Boxy pixel style */
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             display: block;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: white;
+            font-size: 10px;
+            padding: 15px 30px;
+            box-shadow: 4px 4px 0px var(--text-mauve);
+        }
+
+        button:active {
+            box-shadow: 0px 0px 0px;
+            transform: translate(2px, 2px);
         }
 
         #yesButton {
             background-color: var(--yes-yellow);
-            color: var(--text-mauve); /* Darker text for yellow contrast */
-            padding: 12px 40px;
-            font-size: 1rem;
+            color: var(--text-mauve);
         }
 
         #noButton {
             background-color: var(--no-rose);
-            padding: 12px 40px;
-            font-size: 1rem;
+            color: white;
         }
     </style>
 </head>
@@ -122,12 +129,12 @@
         const noTexts = [
             "Are you sure?",
             "Really sure?",
-            "I will be really sad",
+            "I will be sad",
             "Please",
             "Please naaaaa",
-            "Chal chal yes daba",
+            "Daba na yes",
             "YES BOLA MAINE",
-            "Senior ko no nhi bolte"
+            "No nhi bolte"
         ];
 
         function handleNoClick() {
@@ -141,13 +148,14 @@
 
             clickCount++;
 
-            /* SUBTLE GROWTH */
-            let paddingV = 12 + (clickCount * 4); 
-            let paddingH = 40 + (clickCount * 6);
-            let fontSize = 1 + (clickCount * 0.04);
+            /* SUBTLE PIXEL GROWTH */
+            // Smaller increments to maintain the lofi aesthetic
+            let paddingV = 15 + (clickCount * 3); 
+            let paddingH = 30 + (clickCount * 5);
+            let fontSize = 10 + (clickCount * 0.5);
 
             yesButton.style.padding = `${paddingV}px ${paddingH}px`;
-            yesButton.style.fontSize = `${fontSize}rem`;
+            yesButton.style.fontSize = `${fontSize}px`;
 
             if (clickCount > noTexts.length) {
                 noButton.style.display = 'none';
@@ -156,8 +164,8 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 2.5rem; color: var(--text-mauve);">Yay! ❤️</h1>
-                <p style="color: var(--text-mauve); font-size: 1.2rem;">See you on the 14th!</p>
+                <h1 style="font-size: 18px;">YAY! <br> ❤️</h1>
+                <p style="font-size: 10px; line-height: 2;">See you on <br> the 14th!</p>
             `;
         }
     </script>
