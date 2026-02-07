@@ -21,23 +21,23 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
+            /* Keep the lofi background GIF layer */
             background-image: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
                               url('./IMG_1279.gif?v=3');
             background-size: cover, 80px;
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* Rectangular Retro Window */
+        /* Rectangular Retro Window Tab */
         .window-tab {
-            width: 90%;
-            max-width: 480px; /* Rectangular aspect ratio */
+            width: 95%;
+            max-width: 480px; 
             background-color: var(--window-pink);
             border: 4px solid var(--pixel-black);
             box-shadow: 8px 8px 0px var(--pixel-black);
             overflow: hidden;
         }
 
-        /* Top bar from your design image */
         .title-bar {
             background-color: var(--vibrant-coral);
             padding: 10px;
@@ -49,16 +49,20 @@
             font-size: 10px;
         }
 
-        /* Row of 3 Pixel Hearts */
+        /* REPLACED ROW WITH YOUR NEW PNG */
         .heart-row {
-            padding: 12px;
+            padding: 10px;
             display: flex;
             justify-content: center;
-            gap: 25px;
-            font-size: 18px;
-            color: var(--vibrant-coral);
+            gap: 20px;
             background-color: rgba(255, 255, 255, 0.2);
             border-bottom: 2px solid var(--pixel-black);
+        }
+
+        .row-img {
+            width: 45px; /* Adjust size to fit your row aesthetic */
+            height: auto;
+            image-rendering: pixelated;
         }
 
         .content {
@@ -73,9 +77,9 @@
             color: var(--pixel-black);
             margin: 0 0 20px 0;
             text-transform: uppercase;
+            line-height: 1.5;
         }
 
-        /* Photo replaces the cat in the center */
         .img-wrapper {
             padding: 6px;
             background: white;
@@ -85,7 +89,7 @@
         }
 
         #me-img {
-            width: 220px; /* Sized for rectangular fit */
+            width: 220px; 
             display: block;
             image-rendering: pixelated;
         }
@@ -103,10 +107,14 @@
             border: 4px solid var(--pixel-black);
             cursor: pointer;
             text-transform: uppercase;
-            width: 200px; /* Same initial size */
-            height: 50px;
+            width: 220px; /* Same initial width */
+            height: 60px;  /* Same initial height */
             box-shadow: 4px 4px 0px var(--pixel-black);
             transition: all 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
         #yesButton { 
@@ -137,7 +145,9 @@
         </div>
 
         <div class="heart-row">
-            <span>❤</span> <span>❤</span> <span>❤</span>
+            <img src="./IMG_1287.png" class="row-img" alt="decoration">
+            <img src="./IMG_1287.png" class="row-img" alt="decoration">
+            <img src="./IMG_1287.png" class="row-img" alt="decoration">
         </div>
 
         <div class="content">
@@ -176,9 +186,9 @@
 
             clickCount++;
 
-            // Growth logic
-            let newWidth = 200 + (clickCount * 30);
-            let newHeight = 50 + (clickCount * 18);
+            /* Aggressive Growth with Font Size Increase */
+            let newWidth = 220 + (clickCount * 30);
+            let newHeight = 60 + (clickCount * 18);
             let fontSize = 12 + (clickCount * 3);
 
             yesButton.style.width = `${newWidth}px`;
@@ -192,7 +202,7 @@
             document.getElementById('main-content').innerHTML = `
                 <div class="title-bar"><span>SUCCESS</span><div>×</div></div>
                 <div class="content">
-                    <h1 style="font-size: 20px; margin: 40px 0;">YAY! ❤️</h1>
+                    <h1 style="font-size: 18px; margin: 40px 0;">YAY! ❤️</h1>
                     <p style="font-size: 10px; line-height: 2;">SEE YOU ON THE 14TH!</p>
                 </div>
             `;
