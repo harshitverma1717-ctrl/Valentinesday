@@ -7,12 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-lavender: #B4A5CF;
-            --light-purple: #D7B4D4;
-            --yes-yellow: #EEDFB2;
-            --no-rose: #D47B91;
-            --text-mauve: #82637a;
-            --off-white: #fcfafc;
+            --vibrant-coral: #E67A7A; /* Aggressive Coral from image */
+            --dark-coral: #C15B5B;
+            --mint-green: #90CF8E;    /* Vibrant Green from image */
+            --off-white: #FDF2F2;
+            --pixel-black: #2D2D2D;
         }
 
         body {
@@ -22,51 +21,46 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: var(--bg-lavender);
-            /* Soft heart background */
-            background: linear-gradient(rgba(180, 165, 207, 0.8), rgba(180, 165, 207, 0.8)), 
+            background-color: var(--off-white);
+            /* Heart GIF background - kept subtle to let buttons pop */
+            background: linear-gradient(rgba(253, 242, 242, 0.8), rgba(253, 242, 242, 0.8)), 
                         url('./IMG_1279.gif?v=3');
-            background-size: cover, 100px;
-            background-repeat: no-repeat, repeat;
-            background-attachment: fixed;
-            /* Applying Pixel Font */
+            background-size: cover, 80px;
             font-family: 'Press Start 2P', cursive;
-            color: var(--text-mauve);
         }
 
         .container {
             text-align: center;
-            padding: 40px 25px;
-            width: 85%;
+            padding: 30px;
+            width: 90%;
             max-width: 400px;
             background-color: var(--off-white);
-            border-radius: 20px;
+            border: 6px solid var(--vibrant-coral); /* Bold border from image */
+            box-shadow: 8px 8px 0px var(--pixel-black);
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            border: 4px solid var(--light-purple);
         }
 
         h1 {
-            font-size: 14px; /* Pixel fonts look best at smaller sizes */
-            line-height: 1.6;
+            font-size: 12px;
+            color: var(--pixel-black);
+            line-height: 1.8;
             margin-bottom: 25px;
             text-transform: uppercase;
         }
 
         .img-wrapper {
-            padding: 10px;
+            padding: 5px;
             background: white;
-            border-radius: 8px;
-            border: 3px solid var(--light-purple);
-            margin-bottom: 30px;
+            border: 4px solid var(--vibrant-coral);
+            margin-bottom: 25px;
         }
 
         #me-img {
-            width: 200px;
+            width: 180px;
             display: block;
-            image-rendering: pixelated; /* Keeps it sharp like pixel art */
+            image-rendering: pixelated;
         }
 
         .buttons-column {
@@ -79,30 +73,35 @@
 
         button {
             font-family: 'Press Start 2P', cursive;
-            border: 4px solid var(--text-mauve);
-            border-radius: 0; /* Boxy pixel style */
+            border: 4px solid var(--pixel-black);
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
+            transition: all 0.2s ease-out;
             text-transform: uppercase;
-            font-size: 10px;
+            letter-spacing: 1px;
+            width: fit-content;
+        }
+
+        #yesButton {
+            background-color: var(--mint-green);
+            color: var(--pixel-black);
             padding: 15px 30px;
-            box-shadow: 4px 4px 0px var(--text-mauve);
+            font-size: 14px;
+            box-shadow: 4px 4px 0px var(--pixel-black);
+            opacity: 1; /* Full opacity as requested */
+        }
+
+        #noButton {
+            background-color: var(--vibrant-coral);
+            color: white;
+            padding: 12px 25px;
+            font-size: 10px;
+            box-shadow: 4px 4px 0px var(--pixel-black);
+            opacity: 1; /* Full opacity as requested */
         }
 
         button:active {
             box-shadow: 0px 0px 0px;
-            transform: translate(2px, 2px);
-        }
-
-        #yesButton {
-            background-color: var(--yes-yellow);
-            color: var(--text-mauve);
-        }
-
-        #noButton {
-            background-color: var(--no-rose);
-            color: white;
+            transform: translate(4px, 4px);
         }
     </style>
 </head>
@@ -139,7 +138,7 @@
 
         function handleNoClick() {
             if (navigator.vibrate) {
-                navigator.vibrate(50); 
+                navigator.vibrate(80); 
             }
 
             if (clickCount < noTexts.length) {
@@ -148,11 +147,10 @@
 
             clickCount++;
 
-            /* SUBTLE PIXEL GROWTH */
-            // Smaller increments to maintain the lofi aesthetic
-            let paddingV = 15 + (clickCount * 3); 
-            let paddingH = 30 + (clickCount * 5);
-            let fontSize = 10 + (clickCount * 0.5);
+            /* AGGRESSIVE FONT & BUTTON GROWTH */
+            let paddingV = 15 + (clickCount * 8); 
+            let paddingH = 30 + (clickCount * 12);
+            let fontSize = 14 + (clickCount * 4); // Font size increases with button
 
             yesButton.style.padding = `${paddingV}px ${paddingH}px`;
             yesButton.style.fontSize = `${fontSize}px`;
@@ -164,8 +162,8 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 18px;">YAY! <br> ❤️</h1>
-                <p style="font-size: 10px; line-height: 2;">See you on <br> the 14th!</p>
+                <h1 style="font-size: 20px;">YAY! ❤️</h1>
+                <p style="font-size: 10px; color: var(--pixel-black);">SEE YOU ON THE 14TH!</p>
             `;
         }
     </script>
