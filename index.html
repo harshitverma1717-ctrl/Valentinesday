@@ -3,98 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
+    <title>Valentine's Day</title>
     <style>
         :root {
-            /* Change this hex code to your specific color */
-            --primary-color: #FF4D6D; 
-            --accent-green: #4CAF50;
+            --primary-color: #FF4D6D; /* Your color code here */
             --bg-pink: #FFF0F3;
         }
 
         body {
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: var(--bg-pink);
-            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
 
         .container {
             text-align: center;
-            width: 90%;
-            max-width: 800px;
+            padding: 20px;
+            max-width: 400px; /* Constrained width to prevent screen covering */
         }
 
         h1 {
-            font-size: 3.5rem; /* Made larger */
+            font-size: 2rem; /* Scaled down */
             color: var(--primary-color);
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
         }
 
         /* Subtle Photo Frame */
         .img-wrapper {
             display: inline-block;
-            padding: 15px;
+            padding: 8px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
             border: 1px solid rgba(0,0,0,0.05);
         }
 
         #me-img {
-            width: 350px; /* Made larger */
+            width: 220px; /* Medium size */
             display: block;
-            border-radius: 10px;
+            border-radius: 6px;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 50px;
-            height: 120px;
+            gap: 20px; /* Space between buttons */
+            position: relative;
+            height: 60px;
         }
 
         button {
-            padding: 20px 50px; /* Made larger */
-            font-size: 1.8rem; /* Made larger */
+            padding: 12px 25px;
+            font-size: 1.1rem;
             font-weight: bold;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease;
         }
 
         #yesButton {
-            background-color: var(--accent-green);
+            background-color: #4CAF50;
             color: white;
-        }
-
-        #yesButton:hover {
-            transform: scale(1.1);
+            z-index: 1;
         }
 
         #noButton {
             background-color: var(--primary-color);
             color: white;
-            position: absolute;
-            transition: opacity 0.5s ease;
+            z-index: 2;
+            /* Starts relative so it sits next to YES, 
+               JS will change this to absolute on first move */
+            position: relative; 
         }
 
-        /* Fixed Heart Orientation */
         .heart-icon {
             display: inline-block;
-            color: var(--primary-color);
-            transform: rotate(0deg); /* Ensuring it's upright */
-            font-size: 4rem;
+            font-size: 1.5rem;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -117,35 +110,36 @@
         const noButton = document.getElementById('noButton');
         let moveCount = 0;
 
-        function moveAndVibrate() {
-            // Vibrate phone (works on Android/Mobile)
+        function moveAndVibrate(e) {
+            // Vibrate phone
             if (navigator.vibrate) {
-                navigator.vibrate(80);
+                navigator.vibrate(50);
             }
 
             moveCount++;
 
-            // After 6 attempts, the button disappears
-            if (moveCount >= 6) {
+            // After 5 attempts, it disappears
+            if (moveCount >= 5) {
                 noButton.style.opacity = '0';
                 setTimeout(() => {
                     noButton.style.display = 'none';
-                }, 500);
+                }, 300);
                 return;
             }
 
-            // Move to random position
-            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            // Switch to absolute only when it needs to start jumping
+            noButton.style.position = 'absolute';
+
+            // Calculate random position within screen bounds
+            const padding = 20;
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth - padding);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight - padding);
             
             noButton.style.left = `${x}px`;
             noButton.style.top = `${y}px`;
         }
 
-        // Desktop Hover
         noButton.addEventListener('mouseover', moveAndVibrate);
-
-        // Mobile Touch
         noButton.addEventListener('touchstart', (e) => {
             e.preventDefault();
             moveAndVibrate();
@@ -153,9 +147,8 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <h1 style="font-size: 5rem;">YAY! ❤️</h1>
-                <p style="font-size: 2rem; color: #555;">See you on the 14th!</p>
-                <div class="heart-icon" style="font-size: 10rem;">💖</div>
+                <h1 style="font-size: 3rem;">YAY! ❤️</h1>
+                <p style="font-size: 1.2rem;">Best decision ever!</p>
             `;
         }
     </script>
