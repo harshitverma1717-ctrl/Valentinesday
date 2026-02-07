@@ -2,183 +2,164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Be My Valentine?</title>
+<title>Will you be my Valentine?</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-  }
-
   body {
     margin: 0;
     height: 100vh;
-    background: pink;
+    background: #ffc0cb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
     overflow: hidden;
   }
 
-  /* Pixel hearts background */
-  .hearts {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
+  /* Floating hearts */
   .heart {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    transform: rotate(45deg);
-    animation: float 8s linear infinite, spin 4s linear infinite;
-  }
-
-  .heart::before,
-  .heart::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    border-radius: 50%;
-  }
-
-  .heart::before {
-    top: -10px;
-    left: 0;
-  }
-
-  .heart::after {
-    left: -10px;
-    top: 0;
+    width: 60px;
+    opacity: 0.8;
+    animation: float 12s linear infinite;
   }
 
   @keyframes float {
-    from { transform: translateY(100vh) rotate(45deg); }
-    to { transform: translateY(-10vh) rotate(45deg); }
+    from {
+      transform: translateY(100vh) rotate(0deg);
+    }
+    to {
+      transform: translateY(-120vh) rotate(360deg);
+    }
   }
 
-  @keyframes spin {
-    from { rotate: 0deg; }
-    to { rotate: 360deg; }
-  }
-
-  /* Main container */
-  .container {
-    position: relative;
-    z-index: 1;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  /* Main card */
+  .card {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 20px;
     text-align: center;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   }
 
   h1 {
     margin-bottom: 15px;
   }
 
-  .photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid white;
-    margin-bottom: 20px;
+  /* Pixelated photo frame */
+  .photo-frame {
+    padding: 10px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        #000 0px,
+        #000 4px,
+        transparent 4px,
+        transparent 8px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        #000 0px,
+        #000 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    display: inline-block;
+    border-radius: 12px;
+    margin-bottom: 15px;
   }
 
+  .photo-frame img {
+    width: 160px;
+    border-radius: 8px;
+    display: block;
+  }
+
+  /* Buttons */
   .buttons {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
-  }
-
-  button {
-    padding: 15px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+    margin-top: 15px;
   }
 
   #yesBtn {
-    background: green;
+    background: #2ecc71;
     color: white;
-    transition: transform 0.3s;
+    font-size: 20px;
+    padding: 14px 32px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
   }
 
   #noBtn {
-    background: red;
+    background: #e74c3c;
     color: white;
+    font-size: 18px;
+    padding: 12px 28px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
   }
 </style>
 </head>
 
 <body>
 
-<div class="hearts" id="hearts"></div>
+<!-- Hearts (not crowded) -->
+<img src="IMG_1279.gif" class="heart" style="left:10%; animation-duration:14s;">
+<img src="IMG_1279.gif" class="heart" style="left:35%; animation-duration:16s;">
+<img src="IMG_1279.gif" class="heart" style="left:60%; animation-duration:13s;">
+<img src="IMG_1279.gif" class="heart" style="left:80%; animation-duration:18s;">
 
-<div class="container">
-  <img src="IMG_0980.jpeg" class="photo" alt="Me">
+<div class="card">
   <h1>Will you be my Valentine? 💖</h1>
 
+  <div class="photo-frame">
+    <img src="IMG_3913.jpeg" alt="Me">
+  </div>
+
   <div class="buttons">
-    <button id="yesBtn">YES</button>
-    <button id="noBtn">NO</button>
+    <button id="yesBtn">YES 💚</button>
+    <button id="noBtn">No ❤️</button>
   </div>
 </div>
 
 <script>
-  // hearts generator
-  const hearts = document.getElementById("hearts");
-  for (let i = 0; i < 30; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = 5 + Math.random() * 5 + "s";
-    hearts.appendChild(h);
-  }
-
   const noTexts = [
     "Are you sure?",
     "Really sure?",
     "I will be really sad",
     "Please",
     "Please naaaaa",
-    "Chal chal YES daba",
-    "YES BOLA MAINE",
+    "Chal chal yes daba",
+    "YES bola maine",
     "Senior ko no nhi bolte"
   ];
 
-  let clickCount = 0;
+  let noIndex = 0;
+  let scale = 1;
+
   const noBtn = document.getElementById("noBtn");
   const yesBtn = document.getElementById("yesBtn");
 
   noBtn.addEventListener("click", () => {
-    if (clickCount < noTexts.length) {
-      noBtn.innerText = noTexts[clickCount];
-      clickCount++;
-
-      const scale = 1 + clickCount * 0.3;
-      yesBtn.style.transform = `scale(${scale})`;
+    if (noIndex < noTexts.length) {
+      noBtn.innerText = noTexts[noIndex];
+      noIndex++;
     }
+
+    scale += 0.25;
+    if (scale > 2.2) scale = 2.2;
+    yesBtn.style.transform = `scale(${scale})`;
   });
 
   yesBtn.addEventListener("click", () => {
-    document.body.innerHTML = `
-      <div style="
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-size:32px;
-        background:pink;
-      ">
-        💖 YAY! SEE YOU SOON 💖
-      </div>
-    `;
+    document.body.innerHTML = "<h1 style='color:white;'>💖 SHE SAID YES 💖</h1>";
   });
 </script>
 
