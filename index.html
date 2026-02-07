@@ -6,8 +6,9 @@
     <title>Valentine's Day</title>
     <style>
         :root {
-            --primary-color: #FF4D6D; /* Your color code here */
-            --bg-pink: #FFF0F3;
+            --primary-red: #f44336;
+            --accent-green: #4caf50;
+            --bg-pink: #fff0f3;
         }
 
         body {
@@ -24,12 +25,12 @@
         .container {
             text-align: center;
             padding: 20px;
-            max-width: 400px; /* Constrained width to prevent screen covering */
+            z-index: 10;
         }
 
         h1 {
-            font-size: 2rem; /* Scaled down */
-            color: var(--primary-color);
+            font-size: 2rem;
+            color: #d63384;
             margin-bottom: 20px;
         }
 
@@ -45,7 +46,7 @@
         }
 
         #me-img {
-            width: 220px; /* Medium size */
+            width: 200px;
             display: block;
             border-radius: 6px;
         }
@@ -54,9 +55,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px; /* Space between buttons */
-            position: relative;
-            height: 60px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         button {
@@ -64,30 +64,25 @@
             font-size: 1.1rem;
             font-weight: bold;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: all 0.2s ease-in-out;
         }
 
         #yesButton {
-            background-color: #4CAF50;
+            background-color: var(--accent-green);
             color: white;
-            z-index: 1;
+            min-width: 100px;
         }
 
         #noButton {
-            background-color: var(--primary-color);
+            background-color: var(--primary-red);
             color: white;
-            z-index: 2;
-            /* Starts relative so it sits next to YES, 
-               JS will change this to absolute on first move */
-            position: relative; 
         }
 
         .heart-icon {
             display: inline-block;
             font-size: 1.5rem;
-            vertical-align: middle;
         }
     </style>
 </head>
@@ -102,53 +97,61 @@
 
         <div class="buttons">
             <button id="yesButton" onclick="celebrate()">YES 💚</button>
-            <button id="noButton">No ❤️</button>
+            <button id="noButton" onclick="handleNoClick()">No ❤️</button>
         </div>
     </div>
 
     <script>
+        let clickCount = 0;
+        const yesButton = document.getElementById('yesButton');
         const noButton = document.getElementById('noButton');
-        let moveCount = 0;
 
-        function moveAndVibrate(e) {
-            // Vibrate phone
+        const noTexts = [
+            "Are you sure?",
+            "Really sure?",
+            "I will be really sad",
+            "Please",
+            "Please naaaaa",
+            "Chal chal yes daba",
+            "YES BOLA MAINE",
+            "Senior ko no nhi bolte"
+        ];
+
+        function handleNoClick() {
+            // VIBRATION: Needs to be triggered by a click to work on most browsers
             if (navigator.vibrate) {
-                navigator.vibrate(50);
+                navigator.vibrate([100, 50, 100]); 
             }
 
-            moveCount++;
-
-            // After 5 attempts, it disappears
-            if (moveCount >= 5) {
-                noButton.style.opacity = '0';
-                setTimeout(() => {
-                    noButton.style.display = 'none';
-                }, 300);
-                return;
+            // Change No Button Text
+            if (clickCount < noTexts.length) {
+                noButton.innerText = noTexts[clickCount];
+            } else {
+                // After the last phrase, the No button disappears
+                noButton.style.display = 'none';
             }
 
-            // Switch to absolute only when it needs to start jumping
-            noButton.style.position = 'absolute';
-
-            // Calculate random position within screen bounds
-            const padding = 20;
-            const x = Math.random() * (window.innerWidth - noButton.offsetWidth - padding);
-            const y = Math.random() * (window.innerHeight - noButton.offsetHeight - padding);
+            // Make YES Button Bigger
+            clickCount++;
+            let newScale = 1 + (clickCount * 0.4); // Increases by 40% each click
+            let newPadding = 12 + (clickCount * 10);
             
-            noButton.style.left = `${x}px`;
-            noButton.style.top = `${y}px`;
+            yesButton.style.transform = `scale(${newScale})`;
+            // Ensure the YES button doesn't go off screen but stays large
+            if (newScale > 4) {
+                yesButton.style.position = 'fixed';
+                yesButton.style.top = '50%';
+                yesButton.style.left = '50%';
+                yesButton.style.transform = 'translate(-50%, -50%) scale(5)';
+                yesButton.style.zIndex = '100';
+            }
         }
-
-        noButton.addEventListener('mouseover', moveAndVibrate);
-        noButton.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveAndVibrate();
-        });
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
                 <h1 style="font-size: 3rem;">YAY! ❤️</h1>
-                <p style="font-size: 1.2rem;">Best decision ever!</p>
+                <p style="font-size: 1.5rem;">See you soon!</p>
+                <div style="font-size: 5rem;">💖</div>
             `;
         }
     </script>
