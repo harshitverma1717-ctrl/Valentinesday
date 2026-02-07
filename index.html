@@ -10,7 +10,6 @@
             --vibrant-coral: #E67A7A; 
             --mint-green: #90CF8E;    
             --bg-cream: #FDF2F2;
-            --pixel-black: #2D2D2D;
             --window-pink: #F4A7A7;
         }
 
@@ -21,27 +20,29 @@
             align-items: center;
             min-height: 100vh;
             background-color: var(--bg-cream);
-            /* Keep the lofi background GIF layer */
+            /* Background hearts: smaller (40px) and more spaced out */
             background-image: linear-gradient(rgba(253, 242, 242, 0.85), rgba(253, 242, 242, 0.85)), 
                               url('./IMG_1279.gif?v=3');
-            background-size: cover, 80px;
+            background-size: 40px; 
+            background-repeat: repeat;
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* Rectangular Retro Window Tab */
         .window-tab {
             width: 95%;
             max-width: 480px; 
             background-color: var(--window-pink);
-            border: 4px solid var(--pixel-black);
-            box-shadow: 8px 8px 0px var(--pixel-black);
+            /* Changed black border to coral */
+            border: 4px solid var(--vibrant-coral);
+            box-shadow: 8px 8px 0px var(--vibrant-coral);
             overflow: hidden;
         }
 
         .title-bar {
             background-color: var(--vibrant-coral);
             padding: 10px;
-            border-bottom: 4px solid var(--pixel-black);
+            /* Changed black border to coral (darkened slightly for depth) */
+            border-bottom: 4px solid var(--vibrant-coral);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,18 +50,25 @@
             font-size: 10px;
         }
 
-        /* REPLACED ROW WITH YOUR NEW PNG */
         .heart-row {
-            padding: 10px;
+            padding: 12px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 15px;
             background-color: rgba(255, 255, 255, 0.2);
-            border-bottom: 2px solid var(--pixel-black);
+            border-bottom: 4px solid var(--vibrant-coral);
+        }
+
+        /* Pixelated dots using tab color */
+        .pixel-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--vibrant-coral);
         }
 
         .row-img {
-            width: 45px; /* Adjust size to fit your row aesthetic */
+            width: 40px;
             height: auto;
             image-rendering: pixelated;
         }
@@ -72,24 +80,27 @@
             align-items: center;
         }
 
+        /* Increased Font Size */
         h1 {
-            font-size: 11px;
-            color: var(--pixel-black);
-            margin: 0 0 20px 0;
+            font-size: 16px; 
+            color: var(--vibrant-coral);
+            margin: 10px 0 25px 0;
             text-transform: uppercase;
-            line-height: 1.5;
+            line-height: 1.6;
+            text-align: center;
         }
 
         .img-wrapper {
             padding: 6px;
             background: white;
-            border: 4px solid var(--pixel-black);
-            margin-bottom: 25px;
-            box-shadow: 4px 4px 0px var(--pixel-black);
+            /* Border matches main tab color */
+            border: 4px solid var(--vibrant-coral);
+            margin-bottom: 30px;
+            box-shadow: 4px 4px 0px var(--vibrant-coral);
         }
 
         #me-img {
-            width: 220px; 
+            width: 240px; 
             display: block;
             image-rendering: pixelated;
         }
@@ -104,22 +115,22 @@
 
         button {
             font-family: 'Press Start 2P', cursive;
-            border: 4px solid var(--pixel-black);
+            /* Changed black border to coral */
+            border: 4px solid var(--vibrant-coral);
             cursor: pointer;
             text-transform: uppercase;
-            width: 220px; /* Same initial width */
-            height: 60px;  /* Same initial height */
-            box-shadow: 4px 4px 0px var(--pixel-black);
+            width: 220px;
+            height: 60px;
+            box-shadow: 4px 4px 0px var(--vibrant-coral);
             transition: all 0.1s;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
         }
 
         #yesButton { 
             background-color: var(--mint-green); 
-            color: var(--pixel-black); 
+            color: white; 
             font-size: 12px;
             z-index: 10;
         }
@@ -145,9 +156,13 @@
         </div>
 
         <div class="heart-row">
-            <img src="./IMG_1287.png" class="row-img" alt="decoration">
-            <img src="./IMG_1287.png" class="row-img" alt="decoration">
-            <img src="./IMG_1287.png" class="row-img" alt="decoration">
+            <div class="pixel-dot"></div>
+            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <div class="pixel-dot"></div>
+            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <div class="pixel-dot"></div>
+            <img src="./IMG_1287.png" class="row-img" alt="deco">
+            <div class="pixel-dot"></div>
         </div>
 
         <div class="content">
@@ -186,7 +201,6 @@
 
             clickCount++;
 
-            /* Aggressive Growth with Font Size Increase */
             let newWidth = 220 + (clickCount * 30);
             let newHeight = 60 + (clickCount * 18);
             let fontSize = 12 + (clickCount * 3);
@@ -200,10 +214,12 @@
 
         function celebrate() {
             document.getElementById('main-content').innerHTML = `
-                <div class="title-bar"><span>SUCCESS</span><div>×</div></div>
+                <div class="title-bar" style="border-bottom: 4px solid var(--vibrant-coral);">
+                    <span>SUCCESS</span><div>×</div>
+                </div>
                 <div class="content">
-                    <h1 style="font-size: 18px; margin: 40px 0;">YAY! ❤️</h1>
-                    <p style="font-size: 10px; line-height: 2;">SEE YOU ON THE 14TH!</p>
+                    <h1 style="font-size: 20px; margin: 40px 0;">YAY! ❤️</h1>
+                    <p style="font-size: 10px; line-height: 2; color: var(--vibrant-coral);">SEE YOU ON THE 14TH!</p>
                 </div>
             `;
         }
